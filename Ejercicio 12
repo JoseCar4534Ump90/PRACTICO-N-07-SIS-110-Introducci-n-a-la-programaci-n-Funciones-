@@ -1,0 +1,45 @@
+#include <iostream>
+
+using namespace std;
+
+// Prototipo de la función
+bool VALIDAR_FECHA(int dia, int mes, int anio);
+
+int main() {
+    int d, m, a;
+    
+    cout << "--- 12. VALIDADOR DE FECHAS ---" << endl;
+    cout << "Ingrese Dia, Mes y Anio (separados por espacio): ";
+    cin >> d >> m >> a;
+    
+    if (VALIDAR_FECHA(d, m, a)) {
+        cout << "La fecha ingresada es VALIDA." << endl;
+    } else {
+        cout << "La fecha ingresada es INVALIDA." << endl;
+    }
+    
+    return 0;
+}
+
+// Implementación de la función
+bool VALIDAR_FECHA(int dia, int mes, int anio) {
+    // El año debe ser positivo
+    if (anio <= 0) return false;
+    
+    // El mes debe estar entre 1 y 12
+    if (mes < 1 || mes > 12) return false;
+    
+    // Arreglo con los días máximos de cada mes (año normal)
+    int diasPorMes[] = {0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    
+    // Verificación de año bisiesto para ajustar Febrero
+    bool esBisiesto = (anio % 4 == 0 && anio % 100 != 0) || (anio % 400 == 0);
+    if (esBisiesto) {
+        diasPorMes[2] = 29;
+    }
+    
+    // El día debe estar entre 1 y el máximo del mes correspondiente
+    if (dia < 1 || dia > diasPorMes[mes]) return false;
+    
+    return true; // Pasa todas las pruebas
+}
