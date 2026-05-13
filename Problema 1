@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cmath> // Necesaria para cálculos matemáticos con reales
+
+using namespace std;
+
+// Prototipo de la función
+float POTEN(float x, float y);
+
+int main() {
+    float base, exponente;
+    
+    cout << "--- 1. CALCULAR POTENCIA ---" << endl;
+    cout << "Ingrese la base (x): ";
+    cin >> base;
+    cout << "Ingrese el exponente (y): ";
+    cin >> exponente;
+    
+    // Llamada a la función
+    float resultado = POTEN(base, exponente);
+    
+    cout << "El resultado de " << base << "^" << exponente << " es: " << resultado << endl;
+    
+    return 0;
+}
+
+// Implementación de la función
+float POTEN(float x, float y) {
+    return pow(x, y);
+}
