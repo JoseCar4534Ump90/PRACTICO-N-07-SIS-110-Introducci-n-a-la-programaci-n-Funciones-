@@ -1,0 +1,51 @@
+#include <iostream>
+using namespace std;
+
+// Prototipo de la función
+// Usamos '&' en X e Y para pasarlos por referencia (parámetros de salida)
+bool SISTEMA(float A, float B, float C, float D, float E, float F, float &X, float &Y);
+
+int main() {
+    float a, b, c, d, e, f;
+    float solX = 0, solY = 0;
+    
+    cout << "--- 5. RESOLVER SISTEMA DE ECUACIONES ---" << endl;
+    cout << "Ecuacion 1 (Ax + By + C = 0):" << endl;
+    cout << "Ingrese A, B y C (separados por espacio): ";
+    cin >> a >> b >> c;
+    
+    cout << "Ecuacion 2 (Dx + Ey + F = 0):" << endl;
+    cout << "Ingrese D, E y F (separados por espacio): ";
+    cin >> d >> e >> f;
+    
+    // Llamada a la función pasando las variables donde guardaremos el resultado
+    if (SISTEMA(a, b, c, d, e, f, solX, solY)) {
+        cout << "\nSolucion encontrada:" << endl;
+        cout << "X = " << solX << endl;
+        cout << "Y = " << solY << endl;
+    } else {
+        cout << "\nEl sistema no tiene solucion unica (determinante cero)." << endl;
+    }
+    
+    // Ejemplo directo del enunciado: x + 2y + 3 = 0  y  4x + 5y + 6 = 0
+    // SISTEMA(1, 2, 3, 4, 5, 6, solX, solY);
+    
+    return 0;
+}
+
+// Implementación de la función
+bool SISTEMA(float A, float B, float C, float D, float E, float F, float &X, float &Y) {
+    // Calculamos el determinante principal
+    float det = (A * E) - (B * D);
+    
+    // Si el determinante es 0, no se puede resolver
+    if (det == 0) {
+        return false; 
+    }
+    
+    // Aplicamos Cramer (recordando que C y F pasan al otro lado con signo negativo)
+    X = ((B * F) - (C * E)) / det;
+    Y = ((C * D) - (A * F)) / det;
+    
+    return true; // Exito
+}
