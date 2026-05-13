@@ -1,0 +1,36 @@
+#include <iostream>
+
+using namespace std;
+
+// Prototipo de la función factorial
+float FAC(int n);
+
+int main() {
+    int n, r;
+    
+    cout << "--- 7. CALCULO DE NUMERO COMBINATORIO ---" << endl;
+    cout << "Ingrese el valor de n (total de elementos): ";
+    cin >> n;
+    cout << "Ingrese el valor de r (elementos por grupo): ";
+    cin >> r;
+    
+    // Validacion matematica indispensable
+    if (n < 0 || r < 0 || r > n) {
+        cout << "Error: Datos no validos. Asegurese de que n >= r >= 0." << endl;
+    } else {
+        // Aplicacion exacta de la formula solicitada en el enunciado
+        float C = FAC(n) / (FAC(r) * FAC(n - r));
+        cout << "El numero combinatorio Combi(" << n << ", " << r << ") es: " << C << endl;
+    }
+    
+    return 0;
+}
+
+// Definicion de la funcion factorial
+float FAC(int n) {
+    float factorial = 1.0;
+    for (int i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    return factorial;
+}
