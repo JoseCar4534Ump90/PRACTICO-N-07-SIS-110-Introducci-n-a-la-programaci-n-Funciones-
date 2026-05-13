@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Prototipos
+float POTEN(float x, float y);
+float FAC(int n);
+
+int main() {
+    int x, n;
+    float suma = 0.0;
+    int signo = 1; // Alternador de signo: 1 para positivo, -1 para negativo
+    
+    cout << "--- 4. SERIE CON SIGNOS ALTERNOS (IMPARES) ---" << endl;
+    cout << "Ingrese el valor de X (entero positivo): ";
+    cin >> x;
+    cout << "Ingrese el limite maximo N (entero impar positivo): ";
+    cin >> n;
+    
+    // El bucle avanza de 2 en 2 para tomar solo los impares
+    for (int i = 1; i <= n; i += 2) {
+        float termino = (POTEN(x, i) / FAC(i)) * signo;
+        suma += termino;
+        
+        // Invertimos el signo para la siguiente iteracion
+        signo *= -1; 
+    }
+    
+    cout << "La suma total de la serie alternada S es: " << suma << endl;
+    
+    return 0;
+}
+
+// Definicion de funciones
+float POTEN(float x, float y) {
+    return pow(x, y);
+}
+
+float FAC(int n) {
+    float factorial = 1.0;
+    for (int i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    return factorial;
+}
