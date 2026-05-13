@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cmath>
+
+using namespace std;
+
+// Prototipo de la función
+float REDONDEAR(float R, int n);
+
+int main() {
+    float numero;
+    int decimales;
+    
+    cout << "--- 13. REDONDEAR NUMERO ---" << endl;
+    cout << "Ingrese el numero real: ";
+    cin >> numero;
+    cout << "Ingrese la cantidad de decimales a conservar: ";
+    cin >> decimales;
+    
+    float resultado = REDONDEAR(numero, decimales);
+    
+    // Configurar cout para mostrar los decimales exactos solicitados
+    cout.precision(decimales);
+    cout << fixed;
+    cout << "Numero redondeado: " << resultado << endl;
+    
+    return 0;
+}
+
+// Implementación de la función
+float REDONDEAR(float R, int n) {
+    // Calculamos el factor de desplazamiento (10^n)
+    float factor = pow(10, n);
+    
+    // Multiplicamos, redondeamos y regresamos a la escala original
+    return round(R * factor) / factor;
+}
