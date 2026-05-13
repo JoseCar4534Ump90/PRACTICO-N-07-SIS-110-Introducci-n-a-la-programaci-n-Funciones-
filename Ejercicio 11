@@ -1,0 +1,88 @@
+#include <iostream>
+#include <string>
+#include <cmath>
+
+using namespace std;
+
+// Prototipo de la función
+string NUMERO_A_LITERAL(double R);
+
+int main() {
+    float monto;
+    
+    cout << "--- 11. CONVERSOR DE MONEDA A LITERAL ---" << endl;
+    cout << "Ingrese el monto en Bs (ej. 1560.50): ";
+    cin >> monto;
+    
+    if (monto < 0 || monto >= 10000) {
+        cout << "Monto fuera de rango. Debe ser entre 0 y 9999.99" << endl;
+    } else {
+        cout << "Literal: " << NUMERO_A_LITERAL(monto) << endl;
+    }
+    
+    return 0;
+}
+
+// Implementación de la función
+string NUMERO_A_LITERAL(double R) {
+    // Arreglos de soporte para la traducción
+    string unidades[] = {"", "un ", "dos ", "tres ", "cuatro ", "cinco ", "seis ", "siete ", "ocho ", "nueve "};
+    string decenas[] = {"", "diez ", "veinte ", "treinta ", "cuarenta ", "cincuenta ", "sesenta ", "setenta ", "ochenta ", "noventa "};
+    string especiales[] = {"diez ", "once ", "doce ", "trece ", "catorce ", "quince ", "dieciseis ", "diecisiete ", "dieciocho ", "diecinueve "};
+    string centenas[] = {"", "ciento ", "doscientos ", "trescientos ", "cuatrocientos ", "quinientos ", "seiscientos ", "setecientos ", "ochocientos ", "novecientos "};
+    
+    // Separar parte entera y decimales (redondeando centavos para evitar errores de precisión flotante)
+    int entero = (int)R;
+    int centavos = (int)round((R - entero) * 100);
+    
+    string literal = "";
+    
+    // Caso especial si es 0
+    if (entero == 0) {
+        literal = "cero ";
+    } else {
+        // Procesar Miles (1000 - 9999)
+        int miles = entero / 1000;
+        if (miles > 0) {
+            if (miles == 1) literal += "un mil ";
+            else literal += unidades[miles] + "mil ";
+            entero %= 1000;
+        }
+        
+        // Procesar Centenas (100 - 999)
+        int c = entero / 100;
+        if (c > 0) {
+            if (c == 1 && (entero % 100) == 0) literal += "cien ";
+            else literal += centenas[c];
+            entero %= 100;
+        }
+        
+        // Procesar Decenas y Unidades (1 - 99)
+        if (entero >= 10 && entero <= 19) {
+            literal += especiales[entero - 10];
+            entero = 0; // Ya procesamos las unidades
+        } else if (entero >= 20 && entero <= 29) {
+            if (entero == 20) literal += "veinte ";
+            else literal += "veinti" + unidades[entero - 20];
+            entero = 0;
+        } else {
+            int d = entero / 10;
+            if (d > 0) {
+                literal += decenas[d];
+                if ((entero % 10) > 0) literal += "y ";
+            }
+            entero %= 10;
+        }
+        
+        // Procesar Unidades restantes
+        if (entero > 0) {
+            literal += unidades[entero];
+        }
+    }
+    
+    // Formatear la salida final agregando los centavos
+    string centavosStr = to_string(centavos);
+    if (centavos < 10) centavosStr = "0" + centavosStr; // Asegurar 2 dígitos
+    
+    return literal + centavosStr + "/100 bolivianos";
+}
