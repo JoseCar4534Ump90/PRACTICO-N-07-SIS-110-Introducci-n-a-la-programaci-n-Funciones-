@@ -1,0 +1,30 @@
+#include <iostream>
+using namespace std;
+
+// Prototipo de la función
+float FAC(int n);
+
+int main() {
+    int numero;
+    
+    cout << "--- 2. CALCULAR FACTORIAL ---" << endl;
+    cout << "Ingrese un numero entero positivo: ";
+    cin >> numero;
+    
+    if (numero < 0) {
+        cout << "El factorial no esta definido para numeros negativos." << endl;
+    } else {
+        cout << "El factorial de " << numero << "! es: " << FAC(numero) << endl;
+    }
+    
+    return 0;
+}
+
+// Implementación de la función mediante un bucle
+float FAC(int n) {
+    float factorial = 1.0;
+    for (int i = 1; i <= n; i++) {
+        factorial *= i;
+    }
+    return factorial;
+}
