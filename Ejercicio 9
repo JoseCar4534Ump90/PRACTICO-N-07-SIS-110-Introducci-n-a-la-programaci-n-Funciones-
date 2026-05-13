@@ -1,0 +1,37 @@
+#include <iostream>
+
+using namespace std;
+
+// Prototipo de la función
+// Usamos 'long long' por si el usuario ingresa un binario con muchos digitos
+int BINARIO_A_DECIMAL(long long binario);
+
+int main() {
+    long long numBinario;
+    
+    cout << "--- 9. CONVERSOR BINARIO A DECIMAL ---" << endl;
+    cout << "Ingrese un numero binario (solo 0s y 1s): ";
+    cin >> numBinario;
+    
+    int resultado = BINARIO_A_DECIMAL(numBinario);
+    
+    cout << "El equivalente decimal es: " << resultado << endl;
+    
+    return 0;
+}
+
+// Implementacion de la funcion
+int BINARIO_A_DECIMAL(long long binario) {
+    int decimal = 0;
+    int base = 1; // Representa 2^0 al inicio
+    
+    while (binario > 0) {
+        int ultimoDigito = binario % 10; // Extrae el digito de la derecha
+        decimal += ultimoDigito * base;  // Suma el valor ponderado
+        
+        binario /= 10; // Elimina el digito ya procesado
+        base *= 2;     // Sube la potencia de la base (2^1, 2^2, 2^3...)
+    }
+    
+    return decimal;
+}
