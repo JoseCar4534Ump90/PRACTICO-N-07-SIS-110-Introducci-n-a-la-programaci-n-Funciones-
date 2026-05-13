@@ -1,0 +1,48 @@
+#include <iostream>
+#include <cmath> // Para la función abs()
+
+using namespace std;
+
+// Prototipos
+void CALCULAR_DIAS_ENTRE_FECHAS(int d1, int m1, int a1, int d2, int m2, int a2);
+int DIAS_DESDE_EL_INICIO(int dia, int mes, int anio);
+
+int main() {
+    int d1, m1, a1, d2, m2, a2;
+    
+    cout << "--- 14. DIAS ENTRE DOS FECHAS ---" << endl;
+    cout << "Fecha 1 (dd mm aaaa): ";
+    cin >> d1 >> m1 >> a1;
+    cout << "Fecha 2 (dd mm aaaa): ";
+    cin >> d2 >> m2 >> a2;
+    
+    CALCULAR_DIAS_ENTRE_FECHAS(d1, m1, a1, d2, m2, a2);
+    
+    return 0;
+}
+
+// Función auxiliar: Convierte una fecha en un número absoluto de días desde el año 1
+int DIAS_DESDE_EL_INICIO(int dia, int mes, int anio) {
+    // Si el mes es Enero o Febrero, los tratamos como los meses 13 y 14 del año anterior
+    // Esto facilita enormemente el cálculo matemático de los años bisiestos intercalados
+    if (mes <= 2) {
+        mes += 12;
+        anio--;
+    }
+    
+    // Fórmula para calcular días absolutos (Aritmética de fechas estándar)
+    int diasTotales = 365 * anio + (anio / 4) - (anio / 100) + (anio / 400) + (153 * (mes + 1) / 5) + dia;
+    
+    return diasTotales;
+}
+
+// Implementación del procedimiento
+void CALCULAR_DIAS_ENTRE_FECHAS(int d1, int m1, int a1, int d2, int m2, int a2) {
+    int totalDias1 = DIAS_DESDE_EL_INICIO(d1, m1, a1);
+    int totalDias2 = DIAS_DESDE_EL_INICIO(d2, m2, a2);
+    
+    // Calculamos la diferencia absoluta para que no importe qué fecha se ingresa primero
+    int diferencia = abs(totalDias1 - totalDias2);
+    
+    cout << "\nDias transcurridos entre ambas fechas: " << diferencia << " dias." << endl;
+}
